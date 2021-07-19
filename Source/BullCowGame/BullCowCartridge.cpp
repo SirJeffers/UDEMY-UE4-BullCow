@@ -6,13 +6,14 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     Super::BeginPlay();
     PrintLine(TEXT("Welcome to Bulls and Cows"));
     PrintLine(TEXT("Press enter to continue..."));
+    HiddenWord = TEXT("SigmaGrindset"); //move out of function
+
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
     ClearScreen();
-    FString HiddenWord = TEXT("SigmaGrindset"); //move out of function
-
+    
     PrintLine(TEXT("Guess the " + FString::FromInt(HiddenWord.Len()) + " letter word"));
 
     PrintLine(Input);
