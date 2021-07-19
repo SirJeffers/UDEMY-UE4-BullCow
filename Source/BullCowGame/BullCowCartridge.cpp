@@ -11,6 +11,18 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
     ClearScreen();
-    FString HiddenWord = TEXT("SigmaGrindset");
+    FString HiddenWord = TEXT("SigmaGrindset"); //move out of function
+
+    PrintLine(TEXT("Guess the " + FString::FromInt(HiddenWord.Len()) + " letter word"));
+
     PrintLine(Input);
+
+    if(Input.Equals(HiddenWord, ESearchCase::IgnoreCase))
+    {
+        PrintLine(TEXT("You have won!"));
+    }
+    else {
+        PrintLine(TEXT("You have Lost!"));
+    }
+
 }
