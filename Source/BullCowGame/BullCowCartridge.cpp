@@ -5,34 +5,31 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
     InitGame();
-
-    PrintLine(TEXT("Welcome to Bulls and Cows"));
-    PrintLine(TEXT("Press enter to continue..."));
-    PrintLine(FString::Printf(TEXT("Guess the %i letter word"), HiddenWord.Len()));
-    PrintLine(TEXT("The hidden word is: %s"), *HiddenWord);
-
     //init
-
-
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
     ClearScreen();
     
-
-    PrintLine(Input);
-
-    if(Input.Equals(HiddenWord, ESearchCase::IgnoreCase))
+    if(!bGameOver)
     {
-        PrintLine(TEXT("You have won!"));
+        InitGame();
     }
     else {
-        if(HiddenWord.Len() != Input.Len())
+        PrintLine(Input);
+        if(Input.Equals(HiddenWord, ESearchCase::IgnoreCase))
         {
-            PrintLine(FString::Printf(TEXT("the hidden word is %i letters long"), HiddenWord.Len()));
+            PrintLine(TEXT("You have won!"));
         }
-        PrintLine(TEXT("You have Lost!"));
+        else {
+            if(HiddenWord.Len() != Input.Len())
+            {
+                PrintLine(FString::Printf(TEXT("the hidden word is %i letters long, you lost"), HiddenWord.Len()));
+            }     
+            EndGame();  
+        }
+
     }
 
     //check if input is isogram
@@ -51,6 +48,19 @@ void UBullCowCartridge::InitGame()
 {
     HiddenWord = TEXT("SigmaGrindset"); //move out of function
     Lives = HiddenWord.Len();
+    bGameOver = false;
+
+    PrintLine(TEXT("Welcome to Bulls and Cows"));
+    PrintLine(TEXT("Press enter to continue..."));
+    PrintLine(FString::Printf(TEXT("Guess the %i letter word"), HiddenWord.Len()));
+    PrintLine(TEXT("The hidden word is: %s"), *HiddenWord);
 
 }
 
+void UBullCowCartridge::EndGame()
+{
+    bGameOver = true;
+    PrintLine(TEXT("The game is over, you have Lost!"));
+    PrintLine(TEXT("Press enter to play again..."));
+
+}
