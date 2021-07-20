@@ -6,12 +6,11 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     Super::BeginPlay();
     PrintLine(TEXT("Welcome to Bulls and Cows"));
     PrintLine(TEXT("Press enter to continue..."));
+    PrintLine(FString::Printf(TEXT("Guess the %d letter word"), *FString::FromInt(HiddenWord.Len())));
 
     //init
-    HiddenWord = TEXT("SigmaGrindset"); //move out of function
-    Lives = HiddenWord.Len();
+    InitGame();
 
-    PrintLine(TEXT("Guess the " + FString::FromInt(HiddenWord.Len()) + " letter word"));
 
 }
 
@@ -27,6 +26,10 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         PrintLine(TEXT("You have won!"));
     }
     else {
+        if(HiddenWord.Len() != Input.Len())
+        {
+            PrintLine(FString::Printf(TEXT("the hidden word is %d letters long"), *FString::FromInt(HiddenWord.Len())));
+        }
         PrintLine(TEXT("You have Lost!"));
     }
 
@@ -41,3 +44,11 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         //End game or BeginPlay
 
 }
+
+void UBullCowCartridge::InitGame()
+{
+    HiddenWord = TEXT("SigmaGrindset"); //move out of function
+    Lives = HiddenWord.Len();
+
+}
+
