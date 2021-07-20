@@ -12,21 +12,25 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 {
     ClearScreen();
     
-    if(!bGameOver)
+    if(bGameOver)
     {
         InitGame();
     }
     else {
         PrintLine(Input);
+
         if(Input.Equals(HiddenWord, ESearchCase::IgnoreCase))
         {
             PrintLine(TEXT("You have won!"));
         }
         else {
+            Lives--;
+            PrintLine(TEXT("Lose a life!"));
+
             if(HiddenWord.Len() != Input.Len())
             {
-                PrintLine(FString::Printf(TEXT("the hidden word is %i letters long, lose a life"), HiddenWord.Len()));
-                Lives--;
+                PrintLine(FString::Printf(TEXT("the hidden word is %i letters long"), HiddenWord.Len()));
+                PrintLine(FString::Printf(TEXT("%i Lives remaining"), Lives));
             }    
             if(Lives < 1)
             { 
