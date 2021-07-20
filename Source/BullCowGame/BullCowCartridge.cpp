@@ -18,26 +18,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else {
         PrintLine(Input);
-
-        if(Input.Equals(HiddenWord, ESearchCase::IgnoreCase))
-        {
-            PrintLine(TEXT("You have won!"));
-        }
-        else {
-            Lives--;
-            PrintLine(TEXT("Lose a life!"));
-
-            if(HiddenWord.Len() != Input.Len())
-            {
-                PrintLine(FString::Printf(TEXT("the hidden word is %i letters long"), HiddenWord.Len()));
-                PrintLine(FString::Printf(TEXT("%i Lives remaining"), Lives));
-            }    
-            if(Lives < 1)
-            { 
-                EndGame();
-            }  
-        }
-
+        ProcessGuess(Input);
     }
 
     //check if input is isogram
@@ -71,5 +52,26 @@ void UBullCowCartridge::EndGame()
     bGameOver = true;
     PrintLine(TEXT("The game is over, you have Lost!"));
     PrintLine(TEXT("Press enter to play again..."));
+}
 
+void UBullCowCartridge::ProcessGuess(const FString& Guess)
+{
+    if(Guess.Equals(HiddenWord, ESearchCase::IgnoreCase))
+    {
+        PrintLine(TEXT("You have won!"));
+    }
+    else {
+        Lives--;
+        PrintLine(TEXT("Lose a life!"));
+
+        if(HiddenWord.Len() != Guess.Len())
+        {
+            PrintLine(FString::Printf(TEXT("the hidden word is %i letters long"), HiddenWord.Len()));
+            PrintLine(FString::Printf(TEXT("%i Lives remaining"), Lives));
+        }    
+        if(Lives < 1)
+        { 
+            EndGame();
+        }  
+    }
 }
