@@ -83,5 +83,5 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 
 bool UBullCowCartridge::IsIsogram(FString& word)
 {
-
+    return true;
 }
