@@ -50,8 +50,7 @@ void UBullCowCartridge::InitGame()
 void UBullCowCartridge::EndGame()
 {
     bGameOver = true;
-    PrintLine(TEXT("The game is over, you have Lost!"));
-    PrintLine(TEXT("Press enter to play again..."));
+    PrintLine(TEXT("press enter to play again"));
 }
 
 void UBullCowCartridge::ProcessGuess(const FString& Guess)
@@ -59,19 +58,30 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
     if(Guess.Equals(HiddenWord, ESearchCase::IgnoreCase))
     {
         PrintLine(TEXT("You have won!"));
+        EndGame();
+        return;
     }
     else {
-        Lives--;
-        PrintLine(TEXT("Lose a life!"));
-
         if(HiddenWord.Len() != Guess.Len())
         {
             PrintLine(FString::Printf(TEXT("the hidden word is %i letters long"), HiddenWord.Len()));
             PrintLine(FString::Printf(TEXT("%i Lives remaining"), Lives));
+            return;
         }    
+        Lives--;
+        PrintLine(TEXT("Lose a life!"));
+        PrintLine(TEXT("Guess again"));
         if(Lives < 1)
         { 
+            PrintLine(TEXT("The game is over, you have Lost!"));
+            PrintLine(TEXT("Press enter to play again..."));
             EndGame();
+            return;
         }  
     }
+}
+
+bool UBullCowCartridge::IsIsogram(FString& word)
+{
+
 }
