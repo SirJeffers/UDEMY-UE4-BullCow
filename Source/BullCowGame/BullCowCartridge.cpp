@@ -25,16 +25,6 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         ProcessGuess(Input);
     }
 
-    //check if input is isogram
-    //if yes win
-    //if no
-        //remove lives 
-    //check for life count > 0
-    // if yes
-        //guess again and show lives left
-    //if no
-        //End game or BeginPlay
-
 }
 
 void UBullCowCartridge::InitGame()
@@ -48,6 +38,7 @@ void UBullCowCartridge::InitGame()
     PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len());
     PrintLine(FString::Printf(TEXT("you have %i Lives"), Lives)); 
     PrintLine(TEXT("The hidden word is: %s"), *HiddenWord);
+    PrintLine(TEXT("The number of words are: %i"), WordList.Num());
 
 
 }
