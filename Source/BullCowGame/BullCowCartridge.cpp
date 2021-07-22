@@ -45,6 +45,8 @@ void UBullCowCartridge::InitGame()
     PrintLine(FString::Printf(TEXT("you have %i Lives"), Lives)); 
     PrintLine(TEXT("The hidden word is: %s"), *HiddenWord);
 
+    const TCHAR HW[] = TEXT("cakes");
+
 }
 
 void UBullCowCartridge::EndGame()
@@ -83,5 +85,17 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 
 bool UBullCowCartridge::IsIsogram(FString& word)
 {
+
+    for (int32 i = 0; i < word.Len(); i++)
+    {
+        for( int32 j = i; j < word.Len(); j++)
+        {
+            if(word[i]-word[j] == 0)
+            {
+                return false;
+            }
+        }
+    }
+
     return true;
 }
