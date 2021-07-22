@@ -10,7 +10,7 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-    ClearScreen();
+    //ClearScreen();
     
     if(bGameOver)
     {
@@ -35,17 +35,16 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 void UBullCowCartridge::InitGame()
 {
-    HiddenWord = TEXT("SigmaGrindset"); //move out of function
+    HiddenWord = TEXT("penis"); //move out of function
     Lives = HiddenWord.Len();
     bGameOver = false;
 
     PrintLine(TEXT("Welcome to Bulls and Cows"));
     PrintLine(TEXT("Press enter to continue..."));
-    PrintLine(FString::Printf(TEXT("Guess the %i letter word"), HiddenWord.Len()));
+    PrintLine(TEXT("Guess the %i letter word"), HiddenWord.Len());
     PrintLine(FString::Printf(TEXT("you have %i Lives"), Lives)); 
     PrintLine(TEXT("The hidden word is: %s"), *HiddenWord);
 
-    const TCHAR HW[] = TEXT("cakes");
 
 }
 
@@ -66,29 +65,34 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
     else {
         if(HiddenWord.Len() != Guess.Len())
         {
-            PrintLine(FString::Printf(TEXT("the hidden word is %i letters long"), HiddenWord.Len()));
-            PrintLine(FString::Printf(TEXT("%i Lives remaining"), Lives));
+            PrintLine(TEXT("the hidden word is %i letters long"), HiddenWord.Len());
+            PrintLine(TEXT("%i Lives remaining"), Lives);
             return;
-        }    
+        }
+        if(!IsIsogram(Guess))
+        {
+            PrintLine(TEXT("your word was not an isogram"));
+            PrintLine(TEXT("%i Lives remaining"), Lives);
+            return;
+
+        }
         Lives--;
         PrintLine(TEXT("Lose a life!"));
         PrintLine(TEXT("Guess again"));
         if(Lives < 1)
         { 
             PrintLine(TEXT("The game is over, you have Lost!"));
-            PrintLine(TEXT("Press enter to play again..."));
             EndGame();
             return;
         }  
     }
 }
 
-bool UBullCowCartridge::IsIsogram(FString& word)
+bool UBullCowCartridge::IsIsogram(const FString& word)
 {
-
-    for (int32 i = 0; i < word.Len(); i++)
+    for (int32 i = 0; i < word.Len()-1; i++)
     {
-        for( int32 j = i; j < word.Len(); j++)
+        for( int32 j = i+1; j < word.Len(); j++)
         {
             if(word[i]-word[j] == 0)
             {
@@ -96,6 +100,5 @@ bool UBullCowCartridge::IsIsogram(FString& word)
             }
         }
     }
-
     return true;
 }
