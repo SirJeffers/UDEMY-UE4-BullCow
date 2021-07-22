@@ -10,7 +10,7 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-    //ClearScreen();
+    ClearScreen();
     
     if(bGameOver)
     {
@@ -54,7 +54,7 @@ void UBullCowCartridge::EndGame()
     PrintLine(TEXT("press enter to play again"));
 }
 
-void UBullCowCartridge::ProcessGuess(const FString& Guess)
+void UBullCowCartridge::ProcessGuess(FString Guess)
 {
     if(Guess.Equals(HiddenWord, ESearchCase::IgnoreCase))
     {
@@ -77,7 +77,7 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 
         }
         Lives--;
-        PrintLine(TEXT("Lose a life!"));
+        PrintLine(TEXT("Lose a life! %i remaining"), Lives);
         PrintLine(TEXT("Guess again"));
         if(Lives < 1)
         { 
@@ -88,7 +88,7 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
     }
 }
 
-bool UBullCowCartridge::IsIsogram(const FString& word)
+bool UBullCowCartridge::IsIsogram(FString word)
 {
     for (int32 i = 0; i < word.Len()-1; i++)
     {
